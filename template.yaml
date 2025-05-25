@@ -1,0 +1,168 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  url-bookmark-app
+
+  Sample SAM Template for url-bookmark-app
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 3
+    MemorySize: 512
+
+    # You can add LoggingConfig parameters such as the Logformat, Log Group, and SystemLogLevel or ApplicationLogLevel. Learn more here https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-resource-function.html#sam-function-loggingconfig.
+    LoggingConfig:
+      LogFormat: JSON
+
+Parameters:
+  SigningSecret:
+    Type: String
+    Description: Application Signinig Secret
+
+Resources:
+  BookmarkFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: bookmark_url/
+      Handler: post.lambda_handler
+      Runtime: ruby3.4
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref BookmarkUrls
+      Architectures:
+      - x86_64
+      Environment:
+        Variables:
+          RUBYOPT: "-E utf-8"
+          TABLE_NAME: !Ref BookmarkUrls
+          SIGNING_SECRET: !Ref SigningSecret
+      Events:
+        BookmarkUr:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /bookmark-url
+            Method: post
+
+  GetBookmarkFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: bookmark_url/
+      Handler: get.lambda_handler
+      Runtime: ruby3.4
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref BookmarkUrls
+      Architectures:
+      - x86_64
+      Environment:
+        Variables:
+          RUBYOPT: "-E utf-8"
+          TABLE_NAME: !Ref BookmarkUrls
+      Events:
+        GetBookmark:
+          Type: Api
+          Properties:
+            Path: /bookmark-url
+            Method: get
+
+  UpdateBookmarkFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: bookmark_url/
+      Handler: put.lambda_handler
+      Runtime: ruby3.4
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref BookmarkUrls
+      Architectures:
+      - x86_64
+      Environment:
+        Variables:
+          RUBYOPT: "-E utf-8"
+          TABLE_NAME: !Ref BookmarkUrls
+      Events:
+        GetBookmark:
+          Type: Api
+          Properties:
+            Path: /bookmark-url
+            Method: put
+
+  DeleteBookmarkFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: bookmark_url/
+      Handler: delete.lambda_handler
+      Runtime: ruby3.4
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref BookmarkUrls
+      Architectures:
+      - x86_64
+      Environment:
+        Variables:
+          RUBYOPT: "-E utf-8"
+          TABLE_NAME: !Ref BookmarkUrls
+      Events:
+        GetBookmark:
+          Type: Api
+          Properties:
+            Path: /bookmark-url
+            Method: delete
+
+  BookmarkUrls:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: "user_id"
+          AttributeType: "S"
+        - AttributeName: "bookmark_id"
+          AttributeType: "S"
+      KeySchema:
+        - AttributeName: "user_id"
+          KeyType: "HASH"
+        - AttributeName: "bookmark_id"
+          KeyType: "RANGE"
+      BillingMode: "PAY_PER_REQUEST"
+
+
+Outputs:
+  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
+  # Find out more about other implicit resources you can reference within SAM
+  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
+  BookmarkUrlApi:
+    Description: ブックマークURL作成用のAPI GatewayエンドポイントURL（Prod環境）
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/bookmark-url/"
+  BookmarkUrlFunction:
+    Description: ブックマークURL作成用Lambda関数のARN
+    Value: !GetAtt BookmarkFunction.Arn
+  BookmarkUrlFunctionIamRole:
+    Description: ブックマークURL作成用Lambda関数用に作成されたIAMロール
+    Value: !GetAtt BookmarkFunctionRole.Arn
+  GetBookmarkApi:
+    Description: ブックマーク取得用のAPI GatewayエンドポイントURL（Prod環境）
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/bookmark-url/"
+  GetBookmarkFunction:
+    Description: ブックマーク取得用Lambda関数のARN
+    Value: !GetAtt GetBookmarkFunction.Arn
+  GetBookmarkFunctionIamRole:
+    Description: ブックマーク取得用Lambda関数用に作成されたIAMロール
+    Value: !GetAtt GetBookmarkFunctionRole.Arn
+  UpdateBookmarkApi:
+    Description: ブックマーク更新用のAPI GatewayエンドポイントURL（Prod環境）
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/bookmark-url/"
+  UpdateBookmarkFunction:
+    Description: ブックマーク更新用Lambda関数のARN
+    Value: !GetAtt UpdateBookmarkFunction.Arn
+  UpdateBookmarkFunctionIamRole:
+    Description: ブックマーク更新用Lambda関数用に作成されたIAMロール
+    Value: !GetAtt UpdateBookmarkFunctionRole.Arn
+  DeleteBookmarkApi:
+    Description: ブックマーク削除用のAPI GatewayエンドポイントURL（Prod環境）
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/bookmark-url/"
+  DeleteBookmarkFunction:
+    Description: ブックマーク削除用Lambda関数のARN
+    Value: !GetAtt DeleteBookmarkFunction.Arn
+  DeleteBookmarkFunctionIamRole:
+    Description: ブックマーク削除用Lambda関数用に作成されたIAMロール
+    Value: !GetAtt DeleteBookmarkFunctionRole.Arn
