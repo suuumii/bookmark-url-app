@@ -81,8 +81,8 @@ const addBookmark = async () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        bookmark_title: title,
-        bookmark_url: decodedUrl,
+        title: title,
+        url: decodedUrl,
       }),
     });
 
@@ -122,9 +122,9 @@ const saveEdit = async () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        bookmark_id: editState.value.id,
-        bookmark_title: editState.value.title,
-        bookmark_url: editState.value.url,
+        id: editState.value.id,
+        title: editState.value.title,
+        url: editState.value.url,
       }),
     });
 
@@ -155,7 +155,7 @@ const confirmDelete = async () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        bookmark_id: deleteTargetId.value,
+        id: deleteTargetId.value,
       }),
     });
 
