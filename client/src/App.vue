@@ -60,19 +60,28 @@ const addBookmark = async () => {
   try {
     const [tab] = await chrome.tabs.query({
       active: true,
-      lastFocusedWindow: true,
+      currentWindow: true
     });
+
+    if (!tab.url) {
+      throw new Error('URLが取得できませんでした');
+    }
+
     const decodedUrl = decodeURI(tab.url);
+    const title = tab.title || 'No Title';
 
     isLoading.value = true;
     error.value = null;
+    console.log('Tab Title:', title);
+    console.log('Tab URL:', decodedUrl);
+
     const response = await fetch(`${API_BASE_URL}${API_ENDPOINTS}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        bookmark_title: tab.title,
+        bookmark_title: title,
         bookmark_url: decodedUrl,
       }),
     });
@@ -146,7 +155,7 @@ const confirmDelete = async () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        bookmark_id: editState.value.id,
+        bookmark_id: deleteTargetId.value,
       }),
     });
 
