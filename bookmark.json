@@ -1,0 +1,191 @@
+{
+  "uuid": "c29ac666-7d81-4622-8a0b-09d77740df98",
+  "lastMigration": 32,
+  "name": "Bookmark",
+  "endpointPrefix": "",
+  "latency": 0,
+  "port": 3000,
+  "hostname": "",
+  "folders": [],
+  "routes": [
+    {
+      "uuid": "d10812e8-4f96-4efe-8ce7-7c3ee4424dee",
+      "type": "http",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "api/bookmarks",
+      "responses": [
+        {
+          "uuid": "a29b556a-80c8-46ec-873e-5461bd3d665b",
+          "body": "{\n  \"bookmarks\": [\n    {\n      \"id\": \"aaaa\",\n      \"title\": \"bookmark tile !\",\n      \"url\" : \"https://google.com\"\n    },\n    {\n      \"id\": \"bbb\",\n      \"title\": \"yahoo\",\n      \"url\" : \"https://yahoo.co.jp\"\n    }\n  ]\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null
+    },
+    {
+      "uuid": "815c77a3-8506-44a3-8131-8bb6c792fe25",
+      "type": "http",
+      "documentation": "",
+      "method": "post",
+      "endpoint": "api/bookmarks",
+      "responses": [
+        {
+          "uuid": "35b7ced0-69db-4873-b356-cdc407a11848",
+          "body": "{}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null
+    },
+    {
+      "uuid": "6ae51931-b41d-4e54-8399-fa475d28376a",
+      "type": "http",
+      "documentation": "",
+      "method": "put",
+      "endpoint": "api/bookmarks",
+      "responses": [
+        {
+          "uuid": "99fe4da8-5ecb-499f-9b7c-623a44822ddf",
+          "body": "{}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null
+    },
+    {
+      "uuid": "cd8f23a0-bb7d-4431-87fa-9772bb458e2d",
+      "type": "http",
+      "documentation": "",
+      "method": "delete",
+      "endpoint": "api/bookmarks",
+      "responses": [
+        {
+          "uuid": "b858a910-dd84-41dd-9351-04b72ffa7b92",
+          "body": "{}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null
+    }
+  ],
+  "rootChildren": [
+    {
+      "type": "route",
+      "uuid": "d10812e8-4f96-4efe-8ce7-7c3ee4424dee"
+    },
+    {
+      "type": "route",
+      "uuid": "815c77a3-8506-44a3-8131-8bb6c792fe25"
+    },
+    {
+      "type": "route",
+      "uuid": "6ae51931-b41d-4e54-8399-fa475d28376a"
+    },
+    {
+      "type": "route",
+      "uuid": "cd8f23a0-bb7d-4431-87fa-9772bb458e2d"
+    }
+  ],
+  "proxyMode": false,
+  "proxyHost": "",
+  "proxyRemovePrefix": false,
+  "tlsOptions": {
+    "enabled": false,
+    "type": "CERT",
+    "pfxPath": "",
+    "certPath": "",
+    "keyPath": "",
+    "caPath": "",
+    "passphrase": ""
+  },
+  "cors": true,
+  "headers": [
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    },
+    {
+      "key": "Access-Control-Allow-Origin",
+      "value": "*"
+    },
+    {
+      "key": "Access-Control-Allow-Methods",
+      "value": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+    },
+    {
+      "key": "Access-Control-Allow-Headers",
+      "value": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+    }
+  ],
+  "proxyReqHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "proxyResHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "data": [],
+  "callbacks": []
+}

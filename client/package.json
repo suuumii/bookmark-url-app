@@ -13,13 +13,16 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@mdi/font": "^7.4.47",
     "pinia": "^3.0.1",
-    "vue": "^3.5.13"
+    "vue": "^3.5.13",
+    "vuetify": "^3.8.7"
   },
   "devDependencies": {
     "@crxjs/vite-plugin": "^2.0.0-beta.33",
     "@tsconfig/node22": "^22.0.1",
-    "@types/node": "^22.14.0",
+    "@types/chrome": "^0.0.326",
+    "@types/node": "^22.15.29",
     "@vitejs/plugin-vue": "^5.2.3",
     "@vue/eslint-config-prettier": "^10.2.0",
     "@vue/eslint-config-typescript": "^14.5.0",
